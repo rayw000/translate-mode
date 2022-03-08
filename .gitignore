@@ -1,0 +1,5 @@
+orig.md
+trans.md
+*.elc
+*~
+\#*
