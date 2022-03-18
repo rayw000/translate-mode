@@ -1,4 +1,4 @@
-;;; translate-mode.el --- Paragraph-based minor mode for doing translation jobs  -*- lexical-binding: t; -*-
+;;; translate-mode.el --- Paragraph-oriented minor mode for doing translation jobs  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Ray Wang <rayw.public@gmail.com>
 

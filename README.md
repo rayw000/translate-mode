@@ -1,6 +1,6 @@
 Translate Mode
 ==============================
-A paragraph-based Emacs minor mode for doing article translation jobs. Your original article buffer will be scrolled automatically along with your translation buffer scrolling. Never get lost!
+A paragraph-oriented Emacs minor mode for doing article translation jobs. Your original article buffer will be scrolled automatically along with your translation buffer scrolling. Never get lost!
 
 ## Screenshot
 
