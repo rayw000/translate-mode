@@ -176,7 +176,7 @@ ARG defaults to 1."
   "Do something on newline action."
   (interactive)
   (translate--redraw-highlighting)
-  (call-interactively translate-sync-cursor-to-current-paragraph))
+  (call-interactively #'translate-sync-cursor-to-current-paragraph))
 
 (defun translate--pulse-overlay ()
   "Blink overlay at point."
