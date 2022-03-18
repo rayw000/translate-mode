@@ -263,6 +263,7 @@ It's optional unless you want to be prompted to open origianl file
     map)
   "Keymap for `translate-mode' buffers.")
 
+;;;###autoload
 (define-minor-mode translate-mode
   "Toggle translate mode."
   :lighter "Tr"
