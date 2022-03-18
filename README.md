@@ -4,6 +4,8 @@ A paragraph-oriented Emacs minor mode for doing article translation jobs. Your o
 
 ## Screenshot
 
+![screen record](./screen-record.gif)
+
 ## Installation
 
 If you don't have ELPA package in your Emacs, clone this repository and load file.
