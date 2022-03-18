@@ -28,7 +28,23 @@
 
 ;; Usage:
 ;;
-;;   See: https://github.com/rayw000/translate-mode for help.
+;;   Open the translating file you are working with, and run command
+;;
+;;     (translate-init)
+;;
+;;   You can also enable `translate-mode' in your working buffer first, and then use command
+;;
+;;     (translate-open-original-file)
+;;
+;;   or
+;;
+;;     (translate-select-original-buffer)
+;;
+;;   to setup a buffer for referring the original article.
+;;
+;;   See: https://github.com/rayw000/translate-mode for more details.
+
+;;; Code:
 
 (require 'master)
 (require 'pulse)
