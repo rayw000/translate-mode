@@ -220,8 +220,8 @@ ARG defaults to 1."
                  (map 'list 'buffer-name (buffer-list)) nil t "")))
     (set-window-buffer (next-window) buffer)
     (when translate-original-buffer-read-only
-      (with-current-buffer buffer)
-      (read-only-mode 1))
+      (with-current-buffer buffer
+        (read-only-mode 1)))
     (master-set-slave buffer)
     buffer))
 
