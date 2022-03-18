@@ -48,6 +48,7 @@
 
 (require 'master)
 (require 'pulse)
+(require 'cl-lib)
 
 ;;; Code:
 
@@ -233,7 +234,7 @@ ARG defaults to 1."
   (interactive)
   (let ((buffer (completing-read
                  "Select original buffer: "
-                 (map 'list 'buffer-name (buffer-list)) nil t "")))
+                 (cl-map 'list 'buffer-name (buffer-list)) nil t "")))
     (set-window-buffer (next-window) buffer)
     (when translate-original-buffer-read-only
       (with-current-buffer buffer
