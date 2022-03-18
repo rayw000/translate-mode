@@ -8,6 +8,12 @@ A paragraph-oriented Emacs minor mode for doing article translation jobs. Your o
 
 ## Installation
 
+You can install `translate-mode` from MELPA by
+
+```emacs-lisp
+M-x package-install RET translate-mode RET
+```
+
 If you don't have ELPA package in your Emacs, clone this repository and load file.
 ```shell
 git clone https://github.com/rayw000/translate-mode.git
