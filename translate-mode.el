@@ -167,10 +167,10 @@ ARG defaults to 1."
   (interactive)
   (translate--master-slave-call translate-end-of-buffer-function))
 
-(defun translate-recenter ()
+(defun translate-recenter (&optional arg)
   "Recenter in both buffers."
   (interactive)
-  (translate--master-slave-call translate-recenter-function))
+  (translate--master-slave-call translate-recenter-function arg))
 
 (defun translate-newline ()
   "Do something on newline action."
@@ -277,7 +277,7 @@ It's optional unless you want to be prompted to open origianl file
     (define-key map [remap backward-paragraph] #'translate-backward-paragraph)
     (define-key map [remap beginning-of-buffer] #'translate-beginning-of-buffer)
     (define-key map [remap end-of-buffer] #'translate-end-of-buffer)
-    (define-key map [remap recenter] #'translate-recenter)
+    (define-key map [remap recenter-top-bottom] #'translate-recenter)
     map)
   "Keymap for `translate-mode' buffers.")
 
