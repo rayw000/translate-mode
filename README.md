@@ -24,7 +24,7 @@ git clone https://github.com/rayw000/translate-mode.git
 (require 'translate-mode)
 ```
 
-## Quick start
+## Basic Usage
 
 * Open the translating file you are working with, and run command
 ```emacs-lisp
@@ -43,24 +43,34 @@ to setup a buffer for referring the original article.
 
 ## Customization
 
+### Interac
+
+You can customize keybindings by setting `translate-mode-map`. Currently these 
+
+| Keystroke      | Command                   | Description                                                                |
+|----------------|---------------------------|----------------------------------------------------------------------------|
+| <kbd>C-n</kbd> | `translate-next-line`     | Move cursor to next ARG lines like `next-line`. ARG defaults to 1.         |
+| <kbd>C-p</kbd> | `translate-previous-line` | Move cursor to previous ARG lines like `previous-line`. ARG defaults to 1. |
+
 ### Variables
 
-#### `translate-enable-highlight`
-
-Enable highlighting if set to non-nil.
-
-#### `translate-original-buffer-read-only`
-
-The original buffer will be read-only if set to non-nil.
+| Name                                  | Default Value | Description                                |
+|---------------------------------------|---------------|--------------------------------------------|
+| `translate-enable-highlight`          | `t`           | Enable highlighting if non-nil.            |
+| `translate-original-buffer-read-only` | `t`           | Make original buffer read-only if non-nil. |
 
 ### Face
 
-### `translate-paragraph-highlight`
-The paragraph highlighting face.
+```emacs-lisp
+(defface translate-paragraph-highlight
+  '((t :background "grey15" :extend t))
+  "Default face for highlighting the current paragraph in `translate-mode'."
+  :group 'translate)
+```
 
-### Cursor moving functions
+### Cursor Moving Functions
 
-You can custom the cursor moving functions to make `translate-mode` work better with many major modes. For example in `markdown-mode`, moving across paragraphs could be achieved by
+You can customize the cursor moving functions to make `translate-mode` work better with many major modes. For example in `markdown-mode`, moving across paragraphs could be achieved by
 
 ```emacs-lisp
 (setq translate-forward-paragraph-function 'markdown-forward-paragraph)
@@ -79,7 +89,3 @@ Here are available cusor moving function variables.
 * `translate-end-of-buffer-function`
 * `translated-newline-function`
 * `translate-recenter-function`
-
-### Key maps
-
-You can custom `translate-mode-map` to setup your own keybindings.
