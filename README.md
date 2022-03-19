@@ -43,14 +43,32 @@ to setup a buffer for referring the original article.
 
 ## Customization
 
-### Interac
+### Interactive Functions
 
 You can customize keybindings by setting `translate-mode-map`. Currently these 
 
-| Keystroke      | Command                   | Description                                                                |
-|----------------|---------------------------|----------------------------------------------------------------------------|
-| <kbd>C-n</kbd> | `translate-next-line`     | Move cursor to next ARG lines like `next-line`. ARG defaults to 1.         |
-| <kbd>C-p</kbd> | `translate-previous-line` | Move cursor to previous ARG lines like `previous-line`. ARG defaults to 1. |
+| Keystroke                    | Command                         | Description                         |
+|------------------------------|---------------------------------|-------------------------------------|
+| <kbd>C</kbd>-<kbd>n</kbd>    | `translate-next-line`           | Remapped from `next-line`           |
+| <kbd>C</kbd>-<kbd>p</kbd>    | `translate-previous-line`       | Remapped from `previous-line`       |
+| <kbd>C</kbd>-<kbd>v</kbd>    | `translate-scroll-up`           | Remapped from `scroll-up-command`   |
+| <kbd>M</kbd>-<kbd>v</kbd>    | `translate-scroll-down`         | Remapped from `scroll-down-command` |
+| <kbd>M</kbd>-<kbd>}</kbd>    | `translate-forward-paragraph`   | Remapped from `forward-paragraph`   |
+| <kbd>M</kbd>-<kbd>{</kbd>    | `translate-backward-paragraph`  | Remapped from `backward-paragraph`  |
+| <kbd>C</kbd>-<kbd>&lt;</kbd> | `translate-beginning-of-buffer` | Remapped from `beginning-of-buffer` |
+| <kbd>C</kbd>-<kbd>&gt;</kbd> | `translate-end-of-buffer`       | Remapped from `end-of-buffer`       |
+| <kbd>RET</kbd>               | `translate-newline`             | Remapped from `newline`             |
+| <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter`            | Remapped from `recenter-top-bottom` |
+
+There are also interactive functions not bound. You can bind them to your favorite keystrokes.
+
+| Function                                     | Description                                                                                                  |
+|----------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| `translate-toggle-highlight`                 | Toggle paragraph highlighting                                                                                |
+| `translate-sync-cursor-to-current-paragraph` | Move cursor in original artical buffer to the same n-th paragraph as cursor in translation buffer            |
+| `translate-open-original-file`               | Prompt to open a file and set it as the original buffer for referring                                        |
+| `translate-select-original-buffer`           | Prompt to select an existing buffer as the original buffer for referring                                     |
+| `translate-init`                             | Enable `translate-mode` in th current buffer, and prompt to open a file as the original buffer for referring |
 
 ### Variables
 
@@ -79,13 +97,16 @@ You can customize the cursor moving functions to make `translate-mode` work bett
 
 Here are available cusor moving function variables.
 
-* `translate-previous-line-function`
-* `translate-next-line-function`
-* `translate-scroll-up-function`
-* `translate-scroll-down-function`
-* `translate-forward-paragraph-function`
-* `translate-backward-paragraph-function`
-* `translate-beginning-of-buffer-function`
-* `translate-end-of-buffer-function`
-* `translated-newline-function`
-* `translate-recenter-function`
+| Variable                                 | Default               |
+|------------------------------------------|-----------------------|
+| `translate-previous-line-function`       | `previous-line`       |
+| `translate-next-line-function`           | `next-line`           |
+| `translate-scroll-up-function`           | `scroll-up-command`   |
+| `translate-scroll-down-function`         | `scroll-down-command` |
+| `translate-forward-paragraph-function`   | `forward-paragraph`   |
+| `translate-backward-paragraph-function`  | `backward-paragraph`  |
+| `translate-beginning-of-buffer-function` | `beginning-of-buffer` |
+| `translate-end-of-buffer-function`       | `end-of-buffer`       |
+| `translated-newline-function`            | `newline`             |
+| `translate-recenter-function`            | `recenter`            |
+
