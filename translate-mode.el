@@ -221,7 +221,9 @@ ARG is the argument to pass to `translate-recenter-function'."
   (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight))
 
 (defun translate--prepare-window-layout-and-set-buffer (buffer)
-  "Prepare window layout and set the new created buffer into windows."
+  "Prepare window layout and set the new created buffer into windows.
+
+BUFFER is the newly created buffer which is supposed to be set to the new window."
   (delete-other-windows)
   (split-window-right)
   (windmove-right)
