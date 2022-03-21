@@ -49,7 +49,6 @@
 (require 'master)
 (require 'pulse)
 (require 'cl-lib)
-(require 'minibuffer)
 
 ;;; Code:
 
@@ -288,8 +287,7 @@ It's optional unless you want to be prompted to open origianl file
   :init-value nil
   :keymap translate-mode-map
   :group 'translate
-  :after-hook (when (< translate-mode 0)
-                (translate-cleanup)))
+  :after-hook (or translate-mode (translate-cleanup)))
 
 (provide 'translate-mode)
 
