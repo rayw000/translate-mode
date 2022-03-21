@@ -58,7 +58,7 @@ You can customize keybindings by setting `translate-mode-map`. Currently these
 | <kbd>C</kbd>-<kbd>&lt;</kbd> | `translate-beginning-of-buffer` | Remapped from `beginning-of-buffer` |
 | <kbd>C</kbd>-<kbd>&gt;</kbd> | `translate-end-of-buffer`       | Remapped from `end-of-buffer`       |
 | <kbd>RET</kbd>               | `translate-newline`             | Remapped from `newline`             |
-| <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter`            | Remapped from `recenter-top-bottom` |
+| <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter`            | Remapped from `recenter-top-bottom`, will also do `translate-sync-cursor-to-current-paragraph` |
 
 There are also interactive functions not bound. You can bind them to your favorite keystrokes.
 
