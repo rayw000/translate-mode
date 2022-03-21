@@ -220,16 +220,24 @@ ARG is the argument to pass to `translate-recenter-function'."
   (remove-overlays)
   (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight))
 
+(defun translate--prepare-window-layout-and-set-buffer (buffer)
+  "Prepare window layout and set the new created buffer into windows."
+  (delete-other-windows)
+  (split-window-right)
+  (windmove-right)
+  (set-window-buffer (next-window) buffer)
+  (set-window-buffer (next-window) buffer)
+  (when translate-original-buffer-read-only
+    (with-current-buffer buffer
+      (read-only-mode 1)))
+  (master-set-slave buffer))
+
 (defun translate-open-original-file ()
   "Prompt to open a file and set it as the original buffer for translation referring."
   (interactive)
   (let ((buffer (find-file-noselect
                  (read-file-name "Open original file for translatin: "))))
-    (set-window-buffer (next-window) buffer)
-    (when translate-original-buffer-read-only
-      (with-current-buffer buffer
-        (read-only-mode 1)))
-    (master-set-slave buffer)
+    (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
 (defun translate-select-original-buffer ()
@@ -238,11 +246,7 @@ ARG is the argument to pass to `translate-recenter-function'."
   (let ((buffer (completing-read
                  "Select original buffer: "
                  (cl-map 'list 'buffer-name (buffer-list)) nil t "")))
-    (set-window-buffer (next-window) buffer)
-    (when translate-original-buffer-read-only
-      (with-current-buffer buffer
-        (read-only-mode 1)))
-    (master-set-slave buffer)
+    (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
 (defun translate-init ()
@@ -258,6 +262,9 @@ It's optional unless you want to be prompted to open origianl file
     (windmove-right)
     (set-window-buffer (get-buffer-window) translate-buffer)
     (set-window-buffer (next-window) original-buffer)
+    (when translate-original-buffer-read-only
+      (with-current-buffer original-buffer
+        (read-only-mode 1)))
     (master-mode 1)
     (master-set-slave original-buffer)
     (translate-mode 1)))
