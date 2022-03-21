@@ -4,7 +4,7 @@
 
 ;; Author: Ray Wang <rayw.public@gmail.com>
 ;; Package-Requires: ((emacs "24.3"))
-;; Package-Version: 0
+;; Version: 0
 ;; Keywords: translate, convenience, editing
 ;; URL: https://github.com/rayw000/translate-mode
 
@@ -49,6 +49,7 @@
 (require 'master)
 (require 'pulse)
 (require 'cl-lib)
+(require 'minibuffer)
 
 ;;; Code:
 
@@ -168,7 +169,9 @@ ARG defaults to 1."
   (translate--master-slave-call translate-end-of-buffer-function))
 
 (defun translate-recenter (&optional arg)
-  "Recenter in both buffers."
+  "Recenter in both buffers.
+
+ARG is the argument to pass to `translate-recenter-function'."
   (interactive)
   (translate--master-slave-call translate-recenter-function arg))
 
@@ -260,12 +263,9 @@ It's optional unless you want to be prompted to open origianl file
     (translate-mode 1)))
 
 (defun translate-cleanup ()
-  "Restore the window layout and disable `master-mode'."
-  (unless translate-mode
-    (translate--restore-window-layout)
-    (master-mode -1)))
-
-(add-hook 'translate-mode-hook 'translate-cleanup)
+  "Restore the window layout and disable master mode."
+  (translate--restore-window-layout)
+  (master-mode -1))
 
 (defvar translate-mode-map
   (let ((map (make-sparse-keymap)))
@@ -284,10 +284,12 @@ It's optional unless you want to be prompted to open origianl file
 ;;;###autoload
 (define-minor-mode translate-mode
   "Toggle translate mode."
-  :lighter "Tr"
+  :lighter " Tr"
   :init-value nil
   :keymap translate-mode-map
-  :group 'translate)
+  :group 'translate
+  :after-hook (when (< translate-mode 0)
+                (translate-cleanup)))
 
 (provide 'translate-mode)
 
