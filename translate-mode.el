@@ -173,7 +173,8 @@ ARG defaults to 1."
 
 ARG is the argument to pass to `translate-recenter-function'."
   (interactive)
-  (translate--master-slave-call translate-recenter-function arg))
+  (translate--master-slave-call translate-recenter-function arg)
+  (translate-sync-cursor-to-current-paragraph))
 
 (defun translate-newline ()
   "Do something on newline action."
