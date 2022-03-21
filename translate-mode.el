@@ -272,7 +272,7 @@ It's optional unless you want to be prompted to open origianl file
     (translate-mode 1)))
 
 (defun translate-cleanup ()
-  "Restore the window layout and disable master mode."
+  "Clear highlightings, restore the window layout and disable master mode."
   (translate--clear-highlighting)
   (translate--restore-window-layout)
   (master-mode -1))
