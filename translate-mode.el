@@ -271,6 +271,7 @@ It's optional unless you want to be prompted to open origianl file
 
 (defun translate-cleanup ()
   "Restore the window layout and disable master mode."
+  (translate--clear-highlighting)
   (translate--restore-window-layout)
   (master-mode -1))
 
