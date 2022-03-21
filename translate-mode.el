@@ -224,7 +224,7 @@ ARG is the argument to pass to `translate-recenter-function'."
   "Prompt to open a file and set it as the original buffer for translation referring."
   (interactive)
   (let ((buffer (find-file-noselect
-                 (read-file-name (format-prompt "Open original file for translatin: " "")))))
+                 (read-file-name "Open original file for translatin: "))))
     (set-window-buffer (next-window) buffer)
     (when translate-original-buffer-read-only
       (with-current-buffer buffer
