@@ -312,6 +312,7 @@ If ARG is less than zero, turn off, else, turn on."
   :group 'translate
   :after-hook (or translate-mode (translate-cleanup)))
 
+;;;###autoload
 (define-minor-mode translate-refer-mode
   "Minor mode for artcle referring buffer."
   :lighter " TrR"
