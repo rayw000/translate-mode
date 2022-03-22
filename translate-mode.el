@@ -227,8 +227,9 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (windmove-right)
   (set-window-buffer (next-window) buffer)
   (set-window-buffer (next-window) buffer)
-  (when translate-original-buffer-read-only
-    (with-current-buffer buffer
+  (with-current-buffer buffer
+    (translate--toggle-refer-mode 1)
+    (when translate-original-buffer-read-only
       (read-only-mode 1)))
   (master-set-slave buffer))
 
@@ -262,15 +263,23 @@ It's optional unless you want to be prompted to open origianl file
     (windmove-right)
     (set-window-buffer (get-buffer-window) translate-buffer)
     (set-window-buffer (next-window) original-buffer)
-    (when translate-original-buffer-read-only
-      (with-current-buffer original-buffer
+    (with-current-buffer original-buffer
+      (translate--toggle-refer-mode 1)
+      (when translate-original-buffer-read-only
         (read-only-mode 1)))
     (master-mode 1)
     (master-set-slave original-buffer)
     (translate-mode 1)))
 
+(defun translate--toggle-refer-mode (&optional arg)
+  "Toggle `translate-refer-mode'.
+
+If ARG is less than zero, turn off, else, turn on."
+  (master-says 'translate-refer-mode (list arg)))
+
 (defun translate-cleanup ()
   "Clear highlightings, restore the window layout and disable master mode."
+  (translate--toggle-refer-mode -1)
   (translate--clear-highlighting)
   (translate--restore-window-layout)
   (master-mode -1))
@@ -289,14 +298,26 @@ It's optional unless you want to be prompted to open origianl file
     map)
   "Keymap for `translate-mode' buffers.")
 
+(defvar translate-refer-mode-map
+  (let ((map (make-sparse-keymap)))
+    map)
+  "Keymap for `translate-refer-mode' buffers.")
+
 ;;;###autoload
 (define-minor-mode translate-mode
-  "Toggle translate mode."
+  "Minor mode for translation buffer."
   :lighter " Tr"
   :init-value nil
   :keymap translate-mode-map
   :group 'translate
   :after-hook (or translate-mode (translate-cleanup)))
+
+(define-minor-mode translate-refer-mode
+  "Minor mode for artcle referring buffer."
+  :lighter " TrR"
+  :init-value nil
+  :keymap translate-refer-mode-map
+  :group 'translate)
 
 (provide 'translate-mode)
 
