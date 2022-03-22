@@ -50,8 +50,6 @@
 (require 'pulse)
 (require 'cl-lib)
 
-;;; Code:
-
 (defgroup translate nil
   "Minor mode for doing translation jobs."
   :prefix "translate-"
