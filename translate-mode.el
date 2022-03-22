@@ -49,7 +49,6 @@
 (require 'master)
 (require 'pulse)
 (require 'cl-lib)
-(require 'minibuffer)
 
 ;;; Code:
 
