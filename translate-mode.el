@@ -250,6 +250,7 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
+;;;###autoload
 (defun translate-init ()
   "Initialize `translate-mode'.
 
