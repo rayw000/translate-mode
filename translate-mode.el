@@ -218,6 +218,7 @@ ARG is the argument to pass to `translate-recenter-function'."
   (remove-overlays)
   (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight))
 
+;;;###autoload
 (defun translate-get-original-paragraph-text-at-point ()
   (with-current-buffer (get-buffer master-of)
     (save-excursion
