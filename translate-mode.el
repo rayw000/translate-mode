@@ -220,16 +220,18 @@ ARG is the argument to pass to `translate-recenter-function'."
 
 ;;;###autoload
 (defun translate-get-original-paragraph-text-at-point ()
-  (with-current-buffer (get-buffer master-of)
-    (save-excursion
-      (let ((beg (progn (call-interactively translate-backward-paragraph-function 1)
-                        (while (and (not (eobp))
-                                    (looking-at "^$"))
-                          (forward-line))
-                        (point)))
-            (end (progn (call-interactively translate-forward-paragraph-function 1)
-                        (point))))
-        (buffer-substring-no-properties beg end)))))
+  (if master-of
+      (with-current-buffer (get-buffer master-of)
+        (save-excursion
+          (let ((beg (progn (call-interactively translate-backward-paragraph-function 1)
+                            (while (and (not (eobp))
+                                        (looking-at "^$"))
+                              (forward-line))
+                            (point)))
+                (end (progn (call-interactively translate-forward-paragraph-function 1)
+                            (point))))
+            (buffer-substring-no-properties beg end))))
+    (error "You don't have an original buffer. See `translate-select-original-buffer' or `translate-open-original-file'.")))
 
 (defun translate--prepare-window-layout-and-set-buffer (buffer)
   "Prepare window layout and set the new created buffer into windows.
