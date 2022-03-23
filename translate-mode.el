@@ -291,8 +291,9 @@ It's optional unless you want to be prompted to open origianl file
 
 (defun translate-cleanup ()
   "Clear highlightings, restore the window layout and disable master mode."
-  (translate--toggle-refer-mode -1)
-  (translate--clear-highlighting)
+  (ignore-errors
+    (translate--clear-highlighting)
+    (translate--toggle-refer-mode -1))
   (translate--restore-window-layout)
   (master-mode -1))
 
