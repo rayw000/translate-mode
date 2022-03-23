@@ -239,11 +239,12 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (windmove-right)
   (set-window-buffer (next-window) buffer)
   (set-window-buffer (next-window) buffer)
+  (master-mode 1)
+  (master-set-slave buffer)
   (with-current-buffer buffer
     (translate--toggle-refer-mode 1)
     (when translate-original-buffer-read-only
-      (read-only-mode 1)))
-  (master-set-slave buffer))
+      (read-only-mode 1))))
 
 (defun translate-open-original-file ()
   "Prompt to open a file and set it as the original buffer for translation referring."
@@ -276,18 +277,16 @@ It's optional unless you want to be prompted to open origianl file
     (windmove-right)
     (set-window-buffer (get-buffer-window) translate-buffer)
     (set-window-buffer (next-window) original-buffer)
+    (master-mode 1)
+    (master-set-slave original-buffer)
     (with-current-buffer original-buffer
       (translate--toggle-refer-mode 1)
       (when translate-original-buffer-read-only
         (read-only-mode 1)))
-    (master-mode 1)
-    (master-set-slave original-buffer)
     (translate-mode 1)))
 
 (defun translate--toggle-refer-mode (&optional arg)
-  "Toggle `translate-refer-mode'.
-
-If ARG is less than zero, turn off, else, turn on."
+  "Toggle `translate-refer-mode'."
   (master-says 'translate-refer-mode (list arg)))
 
 (defun translate-cleanup ()
