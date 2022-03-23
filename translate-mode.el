@@ -244,8 +244,8 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (set-window-buffer (next-window) buffer)
   (master-mode 1)
   (master-set-slave buffer)
+  (translate--toggle-refer-mode 1)
   (with-current-buffer buffer
-    (translate--toggle-refer-mode 1)
     (when translate-original-buffer-read-only
       (read-only-mode 1))))
 
@@ -282,8 +282,8 @@ It's optional unless you want to be prompted to open origianl file
     (set-window-buffer (next-window) original-buffer)
     (master-mode 1)
     (master-set-slave original-buffer)
+    (translate--toggle-refer-mode 1)
     (with-current-buffer original-buffer
-      (translate--toggle-refer-mode 1)
       (when translate-original-buffer-read-only
         (read-only-mode 1)))
     (translate-mode 1)))
