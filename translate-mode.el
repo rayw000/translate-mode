@@ -216,6 +216,7 @@ ARG is the argument to pass to `translate-recenter-function'."
 
 ;;;###autoload
 (defun translate-get-original-paragraph-text-at-point ()
+  "Get text of the paragraph at point in the original buffer."
   (if master-of
       (with-current-buffer (get-buffer master-of)
         (save-excursion
@@ -227,7 +228,7 @@ ARG is the argument to pass to `translate-recenter-function'."
                 (end (progn (call-interactively translate-forward-paragraph-function 1)
                             (point))))
             (buffer-substring-no-properties beg end))))
-    (error "You don't have an original buffer. See `translate-select-original-buffer' or `translate-open-original-file'.")))
+    (error "You don't have an original buffer. See `translate-select-original-buffer' or `translate-open-original-file'")))
 
 (defun translate--prepare-window-layout-and-set-buffer (buffer)
   "Prepare window layout and set the new created buffer into windows.
@@ -265,7 +266,9 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
     buffer))
 
 (defun translate--toggle-refer-mode (&optional arg)
-  "Toggle `translate-refer-mode'."
+  "Toggle `translate-refer-mode' from translating buffer.
+
+ARG will be directly passed to `translate-refer-mode'."
   (master-says 'translate-refer-mode (list arg)))
 
 (defun translate-cleanup ()
