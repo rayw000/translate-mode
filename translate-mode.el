@@ -30,15 +30,11 @@
 ;;
 ;;   Open the translating file you are working with, and run command
 ;;
-;;     (translate-init)
+;;     (translate-select-original-buffer)
 ;;
-;;   You can also enable `translate-mode' in your working buffer first, and then use command
+;;   to select an existed buffer, or
 ;;
 ;;     (translate-open-original-file)
-;;
-;;   or
-;;
-;;     (translate-select-original-buffer)
 ;;
 ;;   to setup a buffer for referring the original article.
 ;;
@@ -241,14 +237,15 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (split-window-right)
   (windmove-right)
   (set-window-buffer (next-window) buffer)
-  (set-window-buffer (next-window) buffer)
   (master-mode 1)
   (master-set-slave buffer)
   (translate--toggle-refer-mode 1)
   (with-current-buffer buffer
     (when translate-original-buffer-read-only
-      (read-only-mode 1))))
+      (read-only-mode 1)))
+  (translate-mode 1))
 
+;;;###autoload
 (defun translate-open-original-file ()
   "Prompt to open a file and set it as the original buffer for translation referring."
   (interactive)
@@ -257,6 +254,7 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
+;;;###autoload
 (defun translate-select-original-buffer ()
   "Prompt to select the original buffer for referring."
   (interactive)
@@ -265,28 +263,6 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
                  (cl-map 'list 'buffer-name (buffer-list)) nil t "")))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
-
-;;;###autoload
-(defun translate-init ()
-  "Initialize `translate-mode'.
-
-It's optional unless you want to be prompted to open origianl file
- before `translate-mode' is enabled."
-  (interactive)
-  (let ((translate-buffer (current-buffer))
-        (original-buffer (translate-open-original-file)))
-    (delete-other-windows)
-    (split-window-right)
-    (windmove-right)
-    (set-window-buffer (get-buffer-window) translate-buffer)
-    (set-window-buffer (next-window) original-buffer)
-    (master-mode 1)
-    (master-set-slave original-buffer)
-    (translate--toggle-refer-mode 1)
-    (with-current-buffer original-buffer
-      (when translate-original-buffer-read-only
-        (read-only-mode 1)))
-    (translate-mode 1)))
 
 (defun translate--toggle-refer-mode (&optional arg)
   "Toggle `translate-refer-mode'."

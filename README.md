@@ -28,16 +28,11 @@ git clone https://github.com/rayw000/translate-mode.git
 
 * Open the translating file you are working with, and run command
 ```emacs-lisp
-(translate-init)
+(translate-select-original-buffer)
 ``` 
-
-* You can also enable `translate-mode` in your working buffer first, and then use command
+to select an existed buffer or
 ```emacs-lisp
 (translate-open-original-file)
-```
-or
-```emacs-lisp
-(translate-select-original-buffer)
 ```
 to setup a buffer for referring the original article.
 
@@ -68,7 +63,6 @@ There are also interactive functions not bound. You can bind them to your favori
 | `translate-sync-cursor-to-current-paragraph` | Move cursor in original artical buffer to the same n-th paragraph as cursor in translation buffer            |
 | `translate-open-original-file`               | Prompt to open a file and set it as the original buffer for referring                                        |
 | `translate-select-original-buffer`           | Prompt to select an existing buffer as the original buffer for referring                                     |
-| `translate-init`                             | Enable `translate-mode` in th current buffer, and prompt to open a file as the original buffer for referring |
 
 ### Variables
 
