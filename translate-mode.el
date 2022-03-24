@@ -51,7 +51,7 @@
   :prefix "translate-"
   :group 'editing)
 
-(defface translate-paragraph-highlight
+(defface translate-paragraph-highlight-face
   '((t :background "grey15" :extend t))
   "Default face for highlighting the current paragraph in `translate-mode'."
   :group 'translate)
@@ -212,7 +212,7 @@ ARG is the argument to pass to `translate-recenter-function'."
 (defun translate--highlight-paragraph-overlay-at-point ()
   "Highligh overlay at point."
   (remove-overlays)
-  (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight))
+  (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight-face))
 
 ;;;###autoload
 (defun translate-get-original-paragraph-text-at-point ()

@@ -74,7 +74,7 @@ There are also interactive functions not bound. You can bind them to your favori
 ### Face
 
 ```emacs-lisp
-(defface translate-paragraph-highlight
+(defface translate-paragraph-highlight-face
   '((t :background "grey15" :extend t))
   "Default face for highlighting the current paragraph in `translate-mode'."
   :group 'translate)
