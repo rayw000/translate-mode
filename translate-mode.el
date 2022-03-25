@@ -272,11 +272,10 @@ ARG will be directly passed to `translate-refer-mode'."
   (master-says 'translate-refer-mode (list arg)))
 
 (defun translate-cleanup ()
-  "Clear highlightings, restore the window layout and disable master mode."
+  "Clear highlightings and disable master mode."
   (ignore-errors
     (translate--clear-highlighting)
     (translate--toggle-refer-mode -1))
-  (translate--restore-window-layout)
   (master-mode -1))
 
 (defvar translate-mode-map
