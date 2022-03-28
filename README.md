@@ -1,4 +1,5 @@
 [![MELPA](https://melpa.org/packages/translate-mode-badge.svg)](https://melpa.org/#/translate-mode)
+[![MELPA Stable](https://stable.melpa.org/packages/translate-mode-badge.svg)](https://stable.melpa.org/#/translate-mode)
 
 Translate Mode
 ==============================
