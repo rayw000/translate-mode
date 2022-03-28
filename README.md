@@ -26,9 +26,9 @@ git clone https://github.com/rayw000/translate-mode.git
 (require 'translate-mode)
 ```
 
-## Basic Usage
+## Usage
 
-* Open the translation file you are working with, and run command
+Open the translation file you are working with, and run command
 ```emacs-lisp
 (translate-select-reference-buffer)
 ``` 
