@@ -247,21 +247,23 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (translate-mode 1))
 
 ;;;###autoload
-(defun translate-open-reference-file ()
+(defun translate-open-reference-file (&optional filename)
   "Prompt to open a file and set it as the reference buffer for translation referring."
   (interactive)
   (let ((buffer (find-file-noselect
-                 (read-file-name "Open reference file for translatin: "))))
+                 (or filename
+                     (read-file-name "Open reference file for translatin: ")))))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
 ;;;###autoload
-(defun translate-select-reference-buffer ()
+(defun translate-select-reference-buffer (&optional buf)
   "Prompt to select the reference buffer for referring."
   (interactive)
-  (let ((buffer (completing-read
-                 "Select reference buffer: "
-                 (cl-map 'list 'buffer-name (buffer-list)) nil t "")))
+  (let ((buffer (or buf
+                    (completing-read
+                     "Select reference buffer: "
+                     (cl-map 'list 'buffer-name (buffer-list)) nil t ""))))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
