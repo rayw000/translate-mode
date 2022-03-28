@@ -1,4 +1,4 @@
-;;; translate-mode.el --- Paragraph-oriented side-by-side document translation workflow -*- lexical-binding: t; -*-
+;;; translate-mode.el --- Paragraph-oriented side-by-side doc translation workflow -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Ray Wang <rayw.public@gmail.com>
 
