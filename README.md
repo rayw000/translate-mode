@@ -1,8 +1,8 @@
 Translate Mode
 ==============================
-A paragraph-oriented Emacs minor mode for doing article translation jobs. Your original article buffer will be scrolled automatically along with your translation buffer scrolling. Never get lost!
+Paragraph-oriented minor mode for side-by-side document translation workflow. Your reference buffer will be scrolled automatically along with your translation buffer scrolling. Never get lost!
 
-## Screenshot
+## Screen Recording
 
 ![screen record](./screen-record.gif)
 
@@ -26,50 +26,50 @@ git clone https://github.com/rayw000/translate-mode.git
 
 ## Basic Usage
 
-* Open the translating file you are working with, and run command
+* Open the translation file you are working with, and run command
 ```emacs-lisp
-(translate-select-original-buffer)
+(translate-select-reference-buffer)
 ``` 
-to select an existed buffer or
+to select an existed reference buffer or
 ```emacs-lisp
-(translate-open-original-file)
+(translate-open-reference-file)
 ```
-to setup a buffer for referring the original article.
+to open a reference file.
 
 ## Customization
 
 ### Interactive Functions
 
-You can customize keybindings by setting `translate-mode-map`. Currently these 
+You can customize keybindings by setting `translate-mode-map`. Here are the default keybindings.
 
-| Keystroke                    | Command                         | Description                         |
-|------------------------------|---------------------------------|-------------------------------------|
-| <kbd>C</kbd>-<kbd>n</kbd>    | `translate-next-line`           | Remapped from `next-line`           |
-| <kbd>C</kbd>-<kbd>p</kbd>    | `translate-previous-line`       | Remapped from `previous-line`       |
-| <kbd>C</kbd>-<kbd>v</kbd>    | `translate-scroll-up`           | Remapped from `scroll-up-command`   |
-| <kbd>M</kbd>-<kbd>v</kbd>    | `translate-scroll-down`         | Remapped from `scroll-down-command` |
-| <kbd>M</kbd>-<kbd>}</kbd>    | `translate-forward-paragraph`   | Remapped from `forward-paragraph`   |
-| <kbd>M</kbd>-<kbd>{</kbd>    | `translate-backward-paragraph`  | Remapped from `backward-paragraph`  |
-| <kbd>C</kbd>-<kbd>&lt;</kbd> | `translate-beginning-of-buffer` | Remapped from `beginning-of-buffer` |
-| <kbd>C</kbd>-<kbd>&gt;</kbd> | `translate-end-of-buffer`       | Remapped from `end-of-buffer`       |
-| <kbd>RET</kbd>               | `translate-newline`             | Remapped from `newline`             |
+| Keystroke                    | Command                         | Description                                                                                    |
+|------------------------------|---------------------------------|------------------------------------------------------------------------------------------------|
+| <kbd>C</kbd>-<kbd>n</kbd>    | `translate-next-line`           | Remapped from `next-line`                                                                      |
+| <kbd>C</kbd>-<kbd>p</kbd>    | `translate-previous-line`       | Remapped from `previous-line`                                                                  |
+| <kbd>C</kbd>-<kbd>v</kbd>    | `translate-scroll-up`           | Remapped from `scroll-up-command`                                                              |
+| <kbd>M</kbd>-<kbd>v</kbd>    | `translate-scroll-down`         | Remapped from `scroll-down-command`                                                            |
+| <kbd>M</kbd>-<kbd>}</kbd>    | `translate-forward-paragraph`   | Remapped from `forward-paragraph`                                                              |
+| <kbd>M</kbd>-<kbd>{</kbd>    | `translate-backward-paragraph`  | Remapped from `backward-paragraph`                                                             |
+| <kbd>C</kbd>-<kbd>&lt;</kbd> | `translate-beginning-of-buffer` | Remapped from `beginning-of-buffer`                                                            |
+| <kbd>C</kbd>-<kbd>&gt;</kbd> | `translate-end-of-buffer`       | Remapped from `end-of-buffer`                                                                  |
+| <kbd>RET</kbd>               | `translate-newline`             | Remapped from `newline`                                                                        |
 | <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter`            | Remapped from `recenter-top-bottom`, will also do `translate-sync-cursor-to-current-paragraph` |
 
 There are also interactive functions not bound. You can bind them to your favorite keystrokes.
 
-| Function                                     | Description                                                                                                  |
-|----------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| `translate-toggle-highlight`                 | Toggle paragraph highlighting                                                                                |
-| `translate-sync-cursor-to-current-paragraph` | Move cursor in original artical buffer to the same n-th paragraph as cursor in translation buffer            |
-| `translate-open-original-file`               | Prompt to open a file and set it as the original buffer for referring                                        |
-| `translate-select-original-buffer`           | Prompt to select an existing buffer as the original buffer for referring                                     |
+| Function                                     | Description                                                                                                |
+|----------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| `translate-toggle-highlight`                 | Toggle paragraph highlighting                                                                              |
+| `translate-sync-cursor-to-current-paragraph` | Move the cursor in the reference buffer to the same n-th paragraph as the cursor in the translation buffer |
+| `translate-open-reference-file`              | Prompt to open a file and set it as the reference buffer                                                   |
+| `translate-select-reference-buffer`          | Prompt to select an existing buffer as the reference buffer                                                |
 
 ### Variables
 
-| Name                                  | Default Value | Description                                |
-|---------------------------------------|---------------|--------------------------------------------|
-| `translate-enable-highlight`          | `t`           | Enable highlighting if non-nil.            |
-| `translate-original-buffer-read-only` | `t`           | Make original buffer read-only if non-nil. |
+| Name                                   | Default Value | Description                                 |
+|----------------------------------------|---------------|---------------------------------------------|
+| `translate-enable-highlight`           | `t`           | Enable highlighting if non-nil.             |
+| `translate-reference-buffer-read-only` | `t`           | Make reference buffer read-only if non-nil. |
 
 ### Face
 

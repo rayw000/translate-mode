@@ -1,4 +1,4 @@
-;;; translate-mode.el --- Paragraph-oriented minor mode for doing translation jobs  -*- lexical-binding: t; -*-
+;;; translate-mode.el --- Paragraph-oriented minor mode for side-by-side document translation workflow -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2022 Ray Wang <rayw.public@gmail.com>
 
@@ -24,19 +24,19 @@
 ;; along with this file.  If not, see <http://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; A useful minor mode for doing translation jobs.
+;; Paragraph-oriented minor mode for side-by-side document translation workflow
 
 ;; Usage:
 ;;
-;;   Open the translating file you are working with, and run command
+;;   Open the translation file you are working with, and run command
 ;;
-;;     (translate-select-original-buffer)
+;;     (translate-select-reference-buffer)
 ;;
-;;   to select an existed buffer, or
+;;   to select an existed reference buffer, or
 ;;
-;;     (translate-open-original-file)
+;;     (translate-open-reference-file)
 ;;
-;;   to setup a buffer for referring the original article.
+;;   to open a reference file.
 ;;
 ;;   See: https://github.com/rayw000/translate-mode for more details.
 
@@ -58,8 +58,8 @@
 
 (defvar translate-enable-highlight t
   "Enable highlighting if non-nil.")
-(defvar translate-original-buffer-read-only t
-  "Make original buffer read-only if non-nil.")
+(defvar translate-reference-buffer-read-only t
+  "Make reference buffer read-only if non-nil.")
 
 (defvar translate--window-layout-config (current-window-configuration))
 
@@ -110,7 +110,7 @@
   (master-says 'remove-overlays))
 
 (defun translate--master-slave-call (func &optional args)
-  "Call FUNC both in translation buffer and original buffer with ARGS.
+  "Call FUNC both in the translation buffer and the reference buffer with ARGS.
 
  And redraw highlightings."
   (call-interactively func)
@@ -181,7 +181,7 @@ ARG is the argument to pass to `translate-recenter-function'."
   (pulse-momentary-highlight-overlay (translate--get-overlay-at-point)))
 
 (defun translate-sync-cursor-to-current-paragraph ()
-  "Move cursor in original buffer to the same n-th paragraph as translation buffer."
+  "Move cursor in the reference buffer to the same n-th paragraph as translation buffer."
   (interactive)
   (let ((i 0)
         (point (point)))
@@ -215,8 +215,8 @@ ARG is the argument to pass to `translate-recenter-function'."
   (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight-face))
 
 ;;;###autoload
-(defun translate-get-original-paragraph-text-at-point ()
-  "Get text of the paragraph at point in the original buffer."
+(defun translate-get-reference-paragraph-text-at-point ()
+  "Get text of the paragraph at point in the reference buffer."
   (if master-of
       (with-current-buffer (get-buffer master-of)
         (save-excursion
@@ -228,7 +228,7 @@ ARG is the argument to pass to `translate-recenter-function'."
                 (end (progn (call-interactively translate-forward-paragraph-function 1)
                             (point))))
             (buffer-substring-no-properties beg end))))
-    (error "You don't have an original buffer. See `translate-select-original-buffer' or `translate-open-original-file'")))
+    (error "You don't have a reference buffer. See `translate-select-reference-buffer' or `translate-open-reference-file'")))
 
 (defun translate--prepare-window-layout-and-set-buffer (buffer)
   "Prepare window layout and set the new created buffer into windows.
@@ -240,42 +240,42 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
   (set-window-buffer (next-window) buffer)
   (master-mode 1)
   (master-set-slave buffer)
-  (translate--toggle-refer-mode 1)
+  (translate--toggle-reference-mode 1)
   (with-current-buffer buffer
-    (when translate-original-buffer-read-only
+    (when translate-reference-buffer-read-only
       (read-only-mode 1)))
   (translate-mode 1))
 
 ;;;###autoload
-(defun translate-open-original-file ()
-  "Prompt to open a file and set it as the original buffer for translation referring."
+(defun translate-open-reference-file ()
+  "Prompt to open a file and set it as the reference buffer for translation referring."
   (interactive)
   (let ((buffer (find-file-noselect
-                 (read-file-name "Open original file for translatin: "))))
+                 (read-file-name "Open reference file for translatin: "))))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
 ;;;###autoload
-(defun translate-select-original-buffer ()
-  "Prompt to select the original buffer for referring."
+(defun translate-select-reference-buffer ()
+  "Prompt to select the reference buffer for referring."
   (interactive)
   (let ((buffer (completing-read
-                 "Select original buffer: "
+                 "Select reference buffer: "
                  (cl-map 'list 'buffer-name (buffer-list)) nil t "")))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
-(defun translate--toggle-refer-mode (&optional arg)
-  "Toggle `translate-refer-mode' from translating buffer.
+(defun translate--toggle-reference-mode (&optional arg)
+  "Toggle `translate-reference-mode' from translation buffer.
 
-ARG will be directly passed to `translate-refer-mode'."
-  (master-says 'translate-refer-mode (list arg)))
+ARG will be directly passed to `translate-reference-mode'."
+  (master-says 'translate-reference-mode (list arg)))
 
 (defun translate-cleanup ()
   "Clear highlightings and disable master mode."
   (ignore-errors
     (translate--clear-highlighting)
-    (translate--toggle-refer-mode -1))
+    (translate--toggle-reference-mode -1))
   (master-mode -1))
 
 (defvar translate-mode-map
@@ -292,10 +292,10 @@ ARG will be directly passed to `translate-refer-mode'."
     map)
   "Keymap for `translate-mode' buffers.")
 
-(defvar translate-refer-mode-map
+(defvar translate-reference-mode-map
   (let ((map (make-sparse-keymap)))
     map)
-  "Keymap for `translate-refer-mode' buffers.")
+  "Keymap for `translate-reference-mode' buffers.")
 
 ;;;###autoload
 (define-minor-mode translate-mode
@@ -307,11 +307,11 @@ ARG will be directly passed to `translate-refer-mode'."
   :after-hook (or translate-mode (translate-cleanup)))
 
 ;;;###autoload
-(define-minor-mode translate-refer-mode
+(define-minor-mode translate-reference-mode
   "Minor mode for artcle referring buffer."
   :lighter " TrR"
   :init-value nil
-  :keymap translate-refer-mode-map
+  :keymap translate-reference-mode-map
   :group 'translate)
 
 (provide 'translate-mode)
