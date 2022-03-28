@@ -1,3 +1,5 @@
+[![MELPA](https://melpa.org/packages/translate-mode-badge.svg)](https://melpa.org/#/translate-mode)
+
 Translate Mode
 ==============================
 Paragraph-oriented minor mode for side-by-side document translation workflow. Your reference buffer will be scrolled automatically along with your translation buffer scrolling. Never get lost!
