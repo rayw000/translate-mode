@@ -258,7 +258,7 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
 
 ;;;###autoload
 (defun translate-select-reference-buffer (&optional buf)
-  "Prompt to select the reference buffer for referring."
+  "Prompt to select the reference buffer."
   (interactive)
   (let ((buffer (or buf
                     (completing-read
