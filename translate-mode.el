@@ -248,11 +248,11 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
 
 ;;;###autoload
 (defun translate-open-reference-file (&optional filename)
-  "Prompt to open a file and set it as the reference buffer for translation referring."
+  "Prompt to open a file and set it as the reference buffer."
   (interactive)
   (let ((buffer (find-file-noselect
                  (or filename
-                     (read-file-name "Open reference file for translatin: ")))))
+                     (read-file-name "Open reference file: ")))))
     (translate--prepare-window-layout-and-set-buffer buffer)
     buffer))
 
