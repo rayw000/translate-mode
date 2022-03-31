@@ -200,12 +200,12 @@ ARG is the argument to pass to `translate-recenter-function'."
 (defun translate--get-overlay-at-point ()
   "Get the paragraph the point belongs to as an overlay."
   (save-excursion
-    (let ((beg (progn (call-interactively translate-backward-paragraph-function 1)
+    (let ((beg (progn (call-interactively translate-backward-paragraph-function)
                       (while (and (not (eobp))
                                   (looking-at "^$"))
                         (forward-line))
                       (point)))
-          (end (progn (call-interactively translate-forward-paragraph-function 1)
+          (end (progn (call-interactively translate-forward-paragraph-function)
                       (point))))
       (make-overlay beg end))))
 
@@ -220,12 +220,12 @@ ARG is the argument to pass to `translate-recenter-function'."
   (if master-of
       (with-current-buffer (get-buffer master-of)
         (save-excursion
-          (let ((beg (progn (call-interactively translate-backward-paragraph-function 1)
+          (let ((beg (progn (call-interactively translate-backward-paragraph-function)
                             (while (and (not (eobp))
                                         (looking-at "^$"))
                               (forward-line))
                             (point)))
-                (end (progn (call-interactively translate-forward-paragraph-function 1)
+                (end (progn (call-interactively translate-forward-paragraph-function)
                             (point))))
             (buffer-substring-no-properties beg end))))
     (error "You don't have a reference buffer. See `translate-select-reference-buffer' or `translate-open-reference-file'")))
