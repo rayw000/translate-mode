@@ -252,7 +252,7 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
 
 ;;;###autoload
 (defun translate-open-reference-file (&optional filename)
-  "Prompt to open a file and set it as the reference buffer."
+  "Prompt to open the file FILENAME and set it as the reference buffer."
   (interactive)
   (let ((buffer (find-file-noselect
                  (or filename
@@ -262,7 +262,7 @@ BUFFER is the newly created buffer which is supposed to be set to the new window
 
 ;;;###autoload
 (defun translate-select-reference-buffer (&optional buf)
-  "Prompt to select the reference buffer."
+  "Prompt to select the reference buffer BUF."
   (interactive)
   (let ((buffer (or buf
                     (completing-read
