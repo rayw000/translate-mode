@@ -62,6 +62,8 @@
   "Make reference buffer read-only if non-nil.")
 
 (defvar translate--window-layout-config (current-window-configuration))
+(defvar translate--overlay nil
+  "Will be used as a buffer local variable.")
 
 (defun translate--restore-window-layout ()
   "Save window layout for later restoring."
