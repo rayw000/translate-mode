@@ -106,8 +106,11 @@
 
 (defun translate--clear-highlighting ()
   "Clear highlight overlays."
-  (remove-overlays)
-  (master-says 'remove-overlays))
+  (delete-overlay translate--overlay)
+  (when (and (boundp 'master-of)
+             (bufferp master-of))
+    (with-current-buffer master-of
+      (delete-overlay translate--overlay))))
 
 (defun translate--master-slave-call (func &optional args)
   "Call FUNC both in the translation buffer and the reference buffer with ARGS.
@@ -204,25 +207,27 @@ ARG is the argument to pass to `translate-recenter-function'."
   "Get the paragraph the point belongs to as an overlay."
   (save-excursion
     (let ((pair (translate--get-paragraph-beg-end-at-point)))
-      (make-overlay (car pair) (cdr pair)))))
+      (if translate--overlay
+          (move-overlay translate--overlay (car pair) (cdr pair))
+        (setq-local translate--overlay (make-overlay (car pair) (cdr pair)))))))
 
 (defun translate--get-paragraph-beg-end-at-point ()
   "Get the begin and end positions of a paragraph."
-  (save-excursion
-    (let* ((beg (cond ((not (looking-at "^$"))
+  (let* ((beg (cond ((not (looking-at "^$"))
+                     (save-excursion
                        (forward-char)
                        (call-interactively translate-backward-paragraph-function)
-                       (point))
-                      (t (point))))
-           (end (cond ((not (looking-at "^$"))
+                       (point)))
+                    (t (point))))
+         (end (cond ((not (looking-at "^$"))
+                     (save-excursion
                        (call-interactively translate-forward-paragraph-function)
-                       (point))
-                      (t beg))))
-      (cons beg end))))
+                       (point)))
+                    (t beg))))
+    (cons beg end)))
 
 (defun translate--highlight-paragraph-overlay-at-point ()
   "Highligh overlay at point."
-  (remove-overlays)
   (overlay-put (translate--get-overlay-at-point) 'face 'translate-paragraph-highlight-face))
 
 ;;;###autoload
@@ -310,7 +315,11 @@ ARG will be directly passed to `translate-reference-mode'."
   :init-value nil
   :keymap translate-mode-map
   :group 'translate
-  :after-hook (or translate-mode (translate-cleanup)))
+  :after-hook (if translate-mode
+                  (progn
+                    (make-local-variable 'translate--overlay)
+                    (setq-local translate--overlay (make-overlay 0 0 (current-buffer))))
+                (translate-cleanup)))
 
 ;;;###autoload
 (define-minor-mode translate-reference-mode
@@ -318,7 +327,10 @@ ARG will be directly passed to `translate-reference-mode'."
   :lighter " TrR"
   :init-value nil
   :keymap translate-reference-mode-map
-  :group 'translate)
+  :group 'translate
+  :after-hook (when translate-reference-mode
+                (make-local-variable 'translate--overlay)
+                (setq-local translate--overlay (make-overlay 0 0 (current-buffer)))))
 
 (provide 'translate-mode)
 
