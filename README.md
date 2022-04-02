@@ -108,4 +108,5 @@ Here are available cusor moving function variables.
 | `translate-recenter-function`            | `recenter`            |
 
 ## Known Issues
-https://github.com/rayw000/translate-mode/issues/2
+
+#2
