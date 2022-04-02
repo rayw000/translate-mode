@@ -107,3 +107,5 @@ Here are available cusor moving function variables.
 | `translated-newline-function`            | `newline`             |
 | `translate-recenter-function`            | `recenter`            |
 
+## Known Issues
+https://github.com/rayw000/translate-mode/issues/2
