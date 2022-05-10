@@ -174,6 +174,17 @@ ARG is the argument to pass to `translate-recenter-function'."
   (translate--master-slave-call translate-recenter-function arg)
   (translate-sync-cursor-to-current-paragraph))
 
+(defun translate-recenter-top-bottom (&optional arg)
+  "Recenter in both buffers using `recenter-top-bottom'.
+ARG is the argument to pass to `recenter-top-bottom' in each window."
+  (interactive)
+  (let ((translate-recenter-function 'recenter-top-bottom))
+    (with-current-buffer (get-buffer master-of)
+      ;; make `recenter-last-op' local so that it has the same value after
+      ;; being called in each window
+      (make-local-variable 'recenter-last-op))
+    (translate--master-slave-call translate-recenter-function arg)))
+
 (defun translate-newline ()
   "Do something on newline action."
   (interactive)
@@ -301,7 +312,7 @@ ARG will be directly passed to `translate-reference-mode'."
     (define-key map [remap backward-paragraph] #'translate-backward-paragraph)
     (define-key map [remap beginning-of-buffer] #'translate-beginning-of-buffer)
     (define-key map [remap end-of-buffer] #'translate-end-of-buffer)
-    (define-key map [remap recenter-top-bottom] #'translate-recenter)
+    (define-key map [remap recenter-top-bottom] #'translate-recenter-top-bottom)
     map)
   "Keymap for `translate-mode' buffers.")
 
