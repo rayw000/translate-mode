@@ -56,7 +56,7 @@ You can customize keybindings by setting `translate-mode-map`. Here are the defa
 | <kbd>C</kbd>-<kbd>&lt;</kbd> | `translate-beginning-of-buffer` | Remapped from `beginning-of-buffer`                                                            |
 | <kbd>C</kbd>-<kbd>&gt;</kbd> | `translate-end-of-buffer`       | Remapped from `end-of-buffer`                                                                  |
 | <kbd>RET</kbd>               | `translate-newline`             | Remapped from `newline`                                                                        |
-| <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter`            | Remapped from `recenter-top-bottom`, will also do `translate-sync-cursor-to-current-paragraph` |
+| <kbd>C</kbd>-<kbd>l</kbd>    | `translate-recenter-top-bottom` | Remapped from `recenter-top-bottom`, will also do `translate-sync-cursor-to-current-paragraph` |
 
 There are also interactive functions not bound. You can bind them to your favorite keystrokes.
 
@@ -105,8 +105,4 @@ Here are available cusor moving function variables.
 | `translate-beginning-of-buffer-function` | `beginning-of-buffer` |
 | `translate-end-of-buffer-function`       | `end-of-buffer`       |
 | `translated-newline-function`            | `newline`             |
-| `translate-recenter-function`            | `recenter`            |
-
-## Known Issues
-
-#2
+| `translate-recenter-top-bottom-function` | `recenter-top-bottom` |

@@ -89,6 +89,8 @@
   "Newline function. Default to 'newline.")
 (defvar translate-recenter-function 'recenter
   "Recenter function. Default to 'recenter.")
+(defvar translate-recenter-top-bottom-function 'recenter-top-bottom
+  "Recenter top and bottom function. Default to 'recenter-top-bottom.")
 
 (defun translate-toggle-highlight ()
   "Toggle paragraph highlighting."
@@ -178,12 +180,13 @@ ARG is the argument to pass to `translate-recenter-function'."
   "Recenter in both buffers using `recenter-top-bottom'.
 ARG is the argument to pass to `recenter-top-bottom' in each window."
   (interactive)
-  (let ((translate-recenter-function 'recenter-top-bottom))
-    (with-current-buffer (get-buffer master-of)
-      ;; make `recenter-last-op' local so that it has the same value after
-      ;; being called in each window
-      (make-local-variable 'recenter-last-op))
-    (translate--master-slave-call translate-recenter-function arg)))
+  (with-current-buffer (get-buffer master-of)
+    ;; make `recenter-last-op' local so that it has the same value after
+    ;; being called in each window
+    (make-local-variable 'recenter-last-op))
+  (translate-sync-cursor-to-current-paragraph)
+  (translate--master-slave-call translate-recenter-top-bottom-function arg)
+  (master-says 'translate--pulse-overlay))
 
 (defun translate-newline ()
   "Do something on newline action."
@@ -213,7 +216,6 @@ ARG is the argument to pass to `recenter-top-bottom' in each window."
     (master-says translate-backward-paragraph-function)
     (master-says translate-recenter-function)
     (translate--redraw-highlighting)
-    (master-says 'translate--pulse-overlay)
     (message "Sync to paragraph %s" i)))
 
 (defun translate--get-overlay-at-point ()
