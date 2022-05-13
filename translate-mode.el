@@ -73,9 +73,13 @@
   "Previous line function. Default to 'previous-line.")
 (defvar translate-next-line-function 'next-line
   "Next line function. Default to 'next-line.")
-(defvar translate-scroll-up-function 'scroll-up-command
+(defvar translate-scroll-up-function (if (bound-and-true-p cua-mode)
+                                         'cua-scroll-up
+                                       'scroll-up-command)
   "Scroll up function. Default to 'scroll-up-command.")
-(defvar translate-scroll-down-function 'scroll-down-command
+(defvar translate-scroll-down-function (if (bound-and-true-p cua-mode)
+                                           'cua-scroll-down
+                                         'scroll-down-command)
   "Scroll down function. Default to 'scroll-down-command.")
 (defvar translate-forward-paragraph-function 'forward-paragraph
   "Forward paragraph function. Default to 'forward-paragraph.")
@@ -333,7 +337,13 @@ ARG will be directly passed to `translate-reference-mode'."
   :after-hook (if translate-mode
                   (progn
                     (make-local-variable 'translate--overlay)
-                    (setq-local translate--overlay (make-overlay 0 0 (current-buffer))))
+                    (setq-local translate--overlay (make-overlay 0 0 (current-buffer)))
+                    (when (bound-and-true-p cua-mode)
+                      ;; FIXME: these are hardcoded because remapping
+                      ;; cua-scroll-up/down has no effect, including in
+                      ;; cua-global-keymap and cua--cua-keys-keymamp
+                      (define-key translate-mode-map (kbd "<next>") #'translate-scroll-up)
+                      (define-key translate-mode-map (kbd "<prior>") #'translate-scroll-down)))
                 (translate-cleanup)))
 
 ;;;###autoload
